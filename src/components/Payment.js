@@ -1,54 +1,82 @@
-import React  from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { BiLogoVisa } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
 
-const PaymentPage = () => {
-const totalPrice=useSelector((store)=>store.cart.totalPrice)
-console.log(totalPrice)
+const Payment = ({ onClose }) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const paymentRef = useRef();
+  const totalPrice = useSelector((store) => store.cart.totalPrice);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    onClose(); // Invoke the callback to notify the parent component
+  };
+
+  const handleSubmit = () => {
+   
+    handleClose();
+  };
+
+  const handleBackdropClick = (event) => {
+    if (event.target === paymentRef.current) {
+      handleClose();
+    }
+  };
 
   return (
-    <div class="font-[sans-serif] bg-white p-4 min-h-screen">
-      <div class="lg:max-w-6xl max-w-xl mx-auto mt-36">
-        <div class="grid lg:grid-cols-3 gap-8">
-          <div class="lg:col-span-2 max-lg:order-1">
-            <h2 class="text-3xl font-extrabold text-[#333]">Make a payment</h2>
-            <p class="text-[#333] text-base mt-6">Complete your transaction swiftly and securely with our easy-to-use payment process.</p>
-            <form class="mt-12 max-w-lg">
-              <div class="grid gap-6">
-                <input type="text" placeholder="Cardholder's Name"
-                  class="px-4 py-3.5 bg-gray-100 text-[#333] w-full text-sm border rounded-md focus:border-purple-500 outline-none" />
-                <div class="flex bg-gray-100 border rounded-md focus-within:border-purple-500 overflow-hidden">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 ml-3" viewBox="0 0 32 20">
-                    <circle cx="10" cy="10" r="10" fill="#f93232" data-original="#f93232" />
-                    <path fill="#fed049"
-                      d="M22 0c-2.246 0-4.312.75-5.98 2H16v.014c-.396.298-.76.634-1.107.986h2.214c.308.313.592.648.855 1H14.03a9.932 9.932 0 0 0-.667 1h5.264c.188.324.365.654.518 1h-6.291a9.833 9.833 0 0 0-.377 1h7.044c.104.326.186.661.258 1h-7.563c-.067.328-.123.66-.157 1h7.881c.039.328.06.661.06 1h-8c0 .339.027.67.06 1h7.882c-.038.339-.093.672-.162 1h-7.563c.069.341.158.673.261 1h7.044a9.833 9.833 0 0 1-.377 1h-6.291c.151.344.321.678.509 1h5.264a9.783 9.783 0 0 1-.669 1H14.03c.266.352.553.687.862 1h2.215a10.05 10.05 0 0 1-1.107.986A9.937 9.937 0 0 0 22 20c5.523 0 10-4.478 10-10S27.523 0 22 0z"
-                      class="hovered-path" data-original="#fed049" />
-                  </svg>
-                  <input type="number" placeholder="Card Number"
-                    class="px-4 py-3.5 bg-gray-100 text-[#333] w-full text-sm outline-none" />
-                </div>
-                <div class="grid grid-cols-2 gap-6">
-                  <input type="number" placeholder="EXP."
-                    class="px-4 py-3.5 bg-gray-100 text-[#333] w-full text-sm border rounded-md focus:border-purple-500 outline-none" />
-                  <input type="number" placeholder="CVV"
-                    class="px-4 py-3.5 bg-gray-100 text-[#333] w-full text-sm border rounded-md focus:border-purple-500 outline-none" />
-                </div>
+    <>
+      {isOpen && (
+        <div className="font-sans bg-opacity-50 min-h-screen flex items-center justify-center inset-0 fixed backdrop-blur-sm" ref={paymentRef} onClick={handleBackdropClick}>
+          <div className="max-w-xl mx-auto p-5 bg-white shadow-2xl shadow-black">
+            <h2 className="text-3xl font-bold text-gray-800 text-center">Make a Payment</h2>
+            <p className="text-gray-600 text-base mt-4">Complete your transaction swiftly and securely with our easy-to-use payment process.</p>
+            <div className="mt-8">
+              <p className="text-gray-800 text-lg">Total Amount: ₹{totalPrice}</p>
+            </div>
+            <form className="mt-4" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Cardholder's Name"
+                className="px-4 w-full h-12 border border-orange-300 focus:outline-none focus:border-2"
+              />
+              <div className="flex items-center w-full h-12 mt-4 border border-orange-300 focus:outline-none focus:border-2">
+                <BiLogoVisa className="w-8 h-8 px-0.5" />
+                <input
+                  type="number"
+                  placeholder="Card Number"
+                  className="px-2 focus:outline-none w-full h-12 border border-orange-300"
+                />
               </div>
-              <button type="button" class="mt-6 w-40 py-3.5 text-sm bg-purple-500 text-white rounded-md hover:bg-purple-600">Submit</button>
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <input
+                  type="number"
+                  placeholder="EXP."
+                  className="input-field px-4 h-12 w-full border border-orange-300 focus:outline-none focus:border-2"
+                />
+                <input
+                  type="number"
+                  placeholder="CVV"
+                  className="input-field px-4 h-12 w-full border border-orange-300 focus:outline-none focus:border-2"
+                />
+              </div>
+              <button
+                type="submit"
+                className="mt-8 w-full py-3.5 text-sm bg-orange-500 text-white rounded-md hover:bg-red-600"
+              >
+                Submit
+              </button>
             </form>
-          </div>
-          <div class="bg-gray-100 p-6 rounded-md">
-            <h2 class="text-4xl font-extrabold text-[#333]">Total : ₹ {totalPrice}</h2>
-            <ul class="text-[#333] mt-10 space-y-6">
-              <li class="flex flex-wrap gap-4 text-base">Split Sneakers <span class="ml-auto font-bold">$150.00</span></li>
-              <li class="flex flex-wrap gap-4 text-base">Echo Elegance <span class="ml-auto font-bold">$90.00</span></li>
-              <li class="flex flex-wrap gap-4 text-base">Tax <span class="ml-auto font-bold">$10.00</span></li>
-              <li class="flex flex-wrap gap-4 text-base font-bold border-t-2 pt-4">Total <span class="ml-auto">$250.00</span></li>
-            </ul>
+            <NavLink to="/cart">
+              <button className="mt-4 w-full py-3.5 text-sm bg-gray-400 text-white rounded-md hover:bg-gray-600" onClick={handleClose}>
+                Cancel
+              </button>
+            </NavLink>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
-export default PaymentPage;
+export default Payment;

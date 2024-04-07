@@ -1,0 +1,27 @@
+/* ← → */
+
+
+.slick-prev:before, .slick-next:before{
+    font-family: "slick";
+    font-size: 22px !important;
+    line-height: 1;
+    opacity: .75;
+    color:red !important
+}
+.slick-prev:before{
+    content:"<" !important;
+    font-size: 25px !important;
+    font-family: "font awesome 5 free";
+    color:#030000 !important
+}
+
+.slick-next:before{
+    content:">" !important;
+    font-size: 25px !important;
+    font-family: "font awesome 5 free";
+}
+
+
+/* .slider-slicks .slick-next:before, .slider-slick .slick-prev::before{
+    content: none !important;
+} */

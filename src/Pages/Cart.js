@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import ItemList from "../components/ItemList";
 import { updateQuantity, decreaseQuantity } from "../store/slices/CartSlice";
 import { NavLink } from "react-router-dom";
+import Payment from "../components/Payment"
 
 function Cart() {
+
+const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+
   const cartItem = useSelector((store) => store.cart.items);
   let { shipping, totalQuantity, totalPrice } = useSelector(
     (store) => store.cart
   );
-
-  // const totalQuantity = cartItem.reduce(
-  //   (total, item) => total + item.quantity,
-  //   0
-  // );
 
   const dispatch = useDispatch();
   const handleIncreament = (item) => {
@@ -23,6 +22,13 @@ function Cart() {
   const handledecreament = (item) => {
     dispatch(decreaseQuantity(item));
   };
+
+const handlePopUp = () => {
+  setIsPaymentOpen(true);
+}
+const handlePaymentClose = () => {
+  setIsPaymentOpen(false); // Reset the state when closing the popup
+};
   return (
     <>
       {cartItem.length === 0 ? (
@@ -123,17 +129,22 @@ function Cart() {
                       ₹ {totalPrice + shipping}
                     </span>
                   </div>
-                  <NavLink to="/payment">
-                    <button className="bg-orange-500 text-white py-2 px-4 rounded-lg mt-4 w-full">
+                  {/* <NavLink to="/payment"> */}
+                    <button className="bg-orange-500 text-white py-2 px-4 rounded-lg mt-4 w-full" onClick={handlePopUp}>
                       PROCEED TO PAY
                     </button>
-                  </NavLink>
+                  {/* </NavLink> */}
                 </div>
               </div>
             </div>
           </div>
+          
+          {isPaymentOpen && <Payment onClose={handlePaymentClose} />}
+
         </div>
       )}
+              
+
     </>
   );
 }

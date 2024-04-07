@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../../App.css"
 function Banner({ banner }) {
   // console.log(banner)
 

@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import ItemList from "./ItemList";
 
 function RestroCategory({ data }) {
   //   console.log(data.card.card);
   const [showItems, setShowItems] = useState(false);
+  const contentRef = useRef(null);
   const handleClick = () => {
     setShowItems(!showItems);
+    if (!showItems && contentRef.current) {
+      // Scroll to the top of the container when items are shown
+      contentRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+
   };
   return (
     <div className="w-6/12  m-auto bg-gray-50 shadow-lg px-1 mb-2 border-b-2 flex flex-col">
@@ -22,7 +28,7 @@ function RestroCategory({ data }) {
         {showItems ? "🔼" : "🔽"}
         </span>
       </div>
-      <div className="text-start">
+      <div className="text-start" ref={contentRef}>
         {showItems && <ItemList items={data.card.card.itemCards} />}
       </div>
     </div>

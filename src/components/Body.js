@@ -146,7 +146,7 @@ function Body() {
               </h1>
 
               <div className=" py-6 ">
-                <div className="">
+                <div className="banner">
                   <Slider {...settings}>
                     {banner.map((banList, index) => (
                       // console.log(banList)
