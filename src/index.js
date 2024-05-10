@@ -14,10 +14,9 @@ import SignUp from "./Pages/SignUp.js";
 import Login from "./Pages/Login.js";
 import PrivateRoute from "./PrivateRoute.js";
 import { Provider } from "react-redux";
-import Store from "./store/Store"
+import Store from "./store/Store";
 import Payment from "./components/Payment.js";
 import Contact from "./Pages/Contact.js";
-
 
 const router = createBrowserRouter([
   {
@@ -39,18 +38,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element:<PrivateRoute Component={Cart}/>
-        // element: <Cart />,
+        // element:<PrivateRoute Component={Cart}/>
+        element: <Cart />,
       },
       {
         path: "restaurant/:resId",
-        element:<PrivateRoute Component={RestroMenu}/>
-        // element: <RestroMenu />,
+        // element:<PrivateRoute Component={RestroMenu}/>
+        element: <RestroMenu />,
       },
       {
-        path:"/payment",
-        element:<Payment/>
-      }
+        path: "/payment",
+        element: <PrivateRoute Component={Payment} />,
+
+        // element: <Payment />,
+      },
     ],
   },
   {
@@ -61,14 +62,13 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
- 
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-     <Provider store={Store}>
-    <RouterProvider router={router} />
+    <Provider store={Store}>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );

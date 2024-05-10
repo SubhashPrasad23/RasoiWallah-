@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import ItemList from "../components/ItemList";
-import { updateQuantity, decreaseQuantity } from "../store/slices/CartSlice";
+import { updateQuantity, decreaseQuantity,removeItem } from "../store/slices/CartSlice";
 import { NavLink } from "react-router-dom";
-import Payment from "../components/Payment"
+import Payment from "../components/Payment";
+import OrderPlacedModal from "../components/OrderPlacedModal";
+import { MdDelete } from "react-icons/md";
 
 function Cart() {
-
-const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isPlaceOrder, setIsPlaceOrder] = useState(false);
 
   const cartItem = useSelector((store) => store.cart.items);
   let { shipping, totalQuantity, totalPrice } = useSelector(
@@ -23,12 +25,24 @@ const [isPaymentOpen, setIsPaymentOpen] = useState(false);
     dispatch(decreaseQuantity(item));
   };
 
-const handlePopUp = () => {
-  setIsPaymentOpen(true);
+  const handlePopUp = () => {
+    setIsPaymentOpen(true);
+  };
+  const handlePaymentClose = () => {
+    setIsPaymentOpen(false); // Reset the state when closing the popup
+  };
+
+  const handlePlaceOrderClose = () => {
+    setIsPlaceOrder(false);
+  };
+  const handlePlaceOrderopen = () => {
+    setIsPlaceOrder(true);
+  };
+const handleRemoveItem=(item)=>{
+console.log(item)
+dispatch(removeItem(item))
 }
-const handlePaymentClose = () => {
-  setIsPaymentOpen(false); // Reset the state when closing the popup
-};
+
   return (
     <>
       {cartItem.length === 0 ? (
@@ -59,24 +73,24 @@ const handlePaymentClose = () => {
                         <>
                           {/* console.log(item."itemmmm") */}
                           <tr>
-                            <td class="py-4">
-                              <div class="flex items-center">
+                            <td className="py-4">
+                              <div className="flex items-center">
                                 <img
-                                  class="h-16 w-16 mr-4"
+                                  className="h-16 w-16 mr-4"
                                   src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_60/${item.card.info.imageId}`}
                                   alt="Product image"
                                 />
-                                <span class="font-semibold">
+                                <span className="font-semibold">
                                   {item.card.info.name}
                                 </span>
                               </div>
                             </td>
-                            <td class="py-4">
+                            <td className="py-4">
                               ₹{" "}
                               {item.card.info.price / 100 ||
                                 item.card.info.defaultPrice / 100}
                             </td>
-                            <td class="py-4">
+                            <td className="py-4">
                               <div class="flex items-center">
                                 <button
                                   class="border rounded-md py-2 px-4 mr-2"
@@ -84,11 +98,11 @@ const handlePaymentClose = () => {
                                 >
                                   -
                                 </button>
-                                <span class="text-center w-8">
+                                <span className="text-center w-8">
                                   {item.quantity}
                                 </span>
                                 <button
-                                  class="border rounded-md py-2 px-4 ml-2"
+                                  className="border rounded-md py-2 px-4 ml-2"
                                   onClick={() => handleIncreament(item)}
                                 >
                                   +
@@ -96,6 +110,9 @@ const handlePaymentClose = () => {
                               </div>
                             </td>
                             <td className="py-4">₹ {item.singleitemprice}</td>
+                            <td onClick={()=>handleRemoveItem(item)}>
+                              <MdDelete className="h-6 w-6"/>
+                            </td>
                           </tr>
                         </>
                       ))}
@@ -129,22 +146,28 @@ const handlePaymentClose = () => {
                       ₹ {totalPrice + shipping}
                     </span>
                   </div>
-                  {/* <NavLink to="/payment"> */}
-                    <button className="bg-orange-500 text-white py-2 px-4 rounded-lg mt-4 w-full" onClick={handlePopUp}>
-                      PROCEED TO PAY
-                    </button>
-                  {/* </NavLink> */}
+                  <NavLink to="/payment">
+                  <button
+                    className="bg-orange-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
+                    // onClick={handlePopUp}
+                  >
+                    PROCEED TO PAY
+                  </button>
+                  </NavLink>
                 </div>
               </div>
             </div>
           </div>
-          
-          {isPaymentOpen && <Payment onClose={handlePaymentClose} />}
 
+          {isPaymentOpen && <Payment onClose={handlePaymentClose} />}
+          {isPlaceOrder && (
+            <OrderPlacedModal
+              onClose={handlePlaceOrderClose}
+              onOpenUp={handlePlaceOrderopen}
+            />
+          )}
         </div>
       )}
-              
-
     </>
   );
 }

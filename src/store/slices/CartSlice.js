@@ -89,8 +89,30 @@ const cartSlice = createSlice({
         // state.items[check].quantity -= 1;
       }
     },
+    
+    clearCart:(state)=>{
+      state.items=[]
+      state.totalQuantity=0
+      state.totalPrice=0
+  },
+
+  removeItem: (state, action) => {
+    const check = state.items.findIndex((item) => {
+      return item.card.info.id === action.payload.card.info.id;
+    });
+    console.log(check);
+    if (check !== -1) {
+      state.items.splice(check, 1);
+      state.totalPrice=state.items.reduce((total,item)=>total+item.singleitemprice,0)
+
+    }
+  }
+  
+
   },
 });
 
 export default cartSlice.reducer;
-export const { addItem, updateQuantity, decreaseQuantity } = cartSlice.actions;
+export const { addItem, updateQuantity, decreaseQuantity,clearCart,removeItem
+
+ } = cartSlice.actions;

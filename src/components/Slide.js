@@ -5,7 +5,7 @@ import { IoArrowForward } from "react-icons/io5";
 
 function Slide() {
   function scrollToSection(id) {
-    console.log("Scrolling to section:", id);
+    // console.log("Scrolling to section:", id);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });

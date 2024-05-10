@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/slices/AuthSlice";
 import { PiShoppingCartBold } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { RxCross2 } from "react-icons/rx";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // New state for the menu
-
+  // console.log(object)
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
@@ -35,9 +36,9 @@ const Header = () => {
     }
   };
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // const handleMenuToggle = () => {
+  //   setIsMenuOpen(!isMenuOpen);
+  // };
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -64,7 +65,7 @@ const Header = () => {
               </NavLink>
             </div>
 
-            <ul className="hidden ml-10 lg:flex lg:items-center lg:mr-auto lg:space-x-10">
+            <ul className="hidden ml-10 md:flex md:items-center md:mr-auto md:space-x-10">
               <NavLink to="/">
                 <li className="text-md hover:text-orange-500  font-medium  transition-all duration-200  focus:text-orange-500">
                   Home
@@ -83,12 +84,19 @@ const Header = () => {
                 </li>
               </NavLink>
             </ul>
-            <GiHamburgerMenu
-              className="w-10 h-8 lg:hidden"
-              onClick={handleMenuToggle}
-            />
+            {isMenuOpen ? (
+              <RxCross2
+                className="w-10 h-8 md:hidden "
+                onClick={() => setIsMenuOpen(false)}
+              />
+            ) : (
+              <GiHamburgerMenu
+                className="w-10 h-8 md:hidden"
+                onClick={() => setIsMenuOpen(true)}
+              />
+            )}
 
-            <div className="hidden lg:flex lg:items-center lg:space-x-10">
+            <div className="hidden md:flex md:items-center md:space-x-10">
               {isAuth ? (
                 <p className="" onClick={handleUserClick} ref={dropdownRef}>
                   <p className="text-orange-400">
@@ -133,11 +141,35 @@ const Header = () => {
         </div>
       </header>
       {isMenuOpen && (
-        <ul className=" bg-gray-500 w-full h-[670px] absolute top-0 z-50">
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-        </ul>
+        <div className="bg-gray-200 w-full h-[670px] absolute top-0 z-50 md:hidden mt-[75px] px-52 py-16">
+          <ul className="flex flex-col gap-6">
+            <NavLink to="/" onClick={() => setIsMenuOpen(false)}>
+              <li className="text-xl hover:text-orange-400  font-medium  transition-all duration-200  focus:text-orange-400">
+                Home
+              </li>
+            </NavLink>
+            <NavLink to="about" onClick={() => setIsMenuOpen(false)}>
+              <li className="text-xl hover:text-orange-400  font-medium  transition-all duration-200  focus:text-orange-400">
+                About
+              </li>
+            </NavLink>
+            <NavLink to="contact" onClick={() => setIsMenuOpen(false)}>
+              {" "}
+              <li className="text-xl hover:text-orange-400  font-medium  transition-all duration-200  focus:text-orange-400">
+                Contact
+              </li>
+            </NavLink>
+            <NavLink to="/cart" onClick={() => setIsMenuOpen(false)}>
+                <li className="hover:text-orange-500 flex items-center relative ">
+                  <PiShoppingCartBold className="h-10 w-16 " />
+                  <span className="text-white h-6 w-6 left-8 -top-1 rounded-full absolute flex items-center justify-center text-md font-bold  bg-orange-400">
+                    {cartItem.length}
+                  </span>
+                </li>
+              </NavLink>
+          </ul>
+          
+        </div>
       )}
     </>
   );

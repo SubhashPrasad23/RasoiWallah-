@@ -34,7 +34,7 @@ function Login() {
 
   return (
     <div className="bg-gray-100 w-full h-screen flex px-24 py-10 ">
-      <div className="w-1/2 shadow-2xl shadow-black h-full bg-white rounded-tl-3xl rounded-bl-3xl flex justify-center items-center">
+      <div className="lg:w-1/2 w-full shadow-2xl shadow-black lg:h-full h-4/5 bg-white lg:rounded-tl-3xl lg:rounded-bl-3xl  flex justify-center items-center">
         <div className=" w-4/5 h-4/5  flex flex-col mx-24 px-10  ">
           <h3 className="text-3xl font-semibold text-gray-600 my-10">Log In</h3>
           <form onSubmit={submitHandler} className="flex flex-col">
@@ -61,11 +61,13 @@ function Login() {
                   type="checkbox"
                   name="IsrememberMe"
                   id="rememberMe"
-                  className="h-4 w-4"
+                  className="md:h-4 md:w-4 h-3 w-3"
                 />
-                <label htmlFor="rememberMe">Rememmber me</label>
+                <label htmlFor="rememberMe" className="text-xs md:text-base">
+                  Remember me
+                </label>
               </div>
-              <p>Forgot Password?</p>
+              <p className="text-xs md:text-base">Forgot Password?</p>
             </div>
 
             <button
@@ -84,7 +86,7 @@ function Login() {
           </NavLink>
         </div>
       </div>
-      <div className="w-1/2 h-full shadow-2xl shadow-black rounded-tr-3xl rounded-br-3xl relative">
+      <div className="w-1/2 h-full hidden lg:block shadow-2xl shadow-black rounded-tr-3xl rounded-br-3xl relative">
         <img
           src={loginImg}
           alt="loginImg"

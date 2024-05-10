@@ -1,7 +1,7 @@
 /* ← → */
 
 
-.slick-prev:before, .slick-next:before{
+/* .slick-prev:before, .slick-next:before{
     font-family: "slick";
     font-size: 22px !important;
     line-height: 1;
@@ -9,19 +9,32 @@
     color:red !important
 }
 .slick-prev:before{
-    content:"<" !important;
+    content:"←" !important;
     font-size: 25px !important;
     font-family: "font awesome 5 free";
-    color:#030000 !important
 }
 
 .slick-next:before{
-    content:">" !important;
+    content:"→" !important;
     font-size: 25px !important;
     font-family: "font awesome 5 free";
-}
-
-
-/* .slider-slicks .slick-next:before, .slider-slick .slick-prev::before{
-    content: none !important;
 } */
+
+
+.slick-next,
+.slick-prev {
+    padding: 5px !important;
+    width: 45px !important;
+    height: 45px !important;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    background-color: #fff;
+    z-index: 99 !important;
+    box-shadow: rgb(35 35 35 / 50%) 0px 0px 20px 5px;
+    top: 40%;
+    &:hover{
+    background-color:#fff;
+
+    }
+}

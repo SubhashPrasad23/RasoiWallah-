@@ -11,7 +11,7 @@ function Banner({ banner }) {
         <img
           src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${imageId}`}
           alt="Dishes"
-          className="h-72 w-64"
+          className="h-56 w-48 md:h-72 md:w-64"
         />
       </div>
     </div>

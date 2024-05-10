@@ -9,7 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 import { NavLink } from "react-router-dom";
 import { LuSearch } from "react-icons/lu";
 import Slide from "./Slide";
-
+import leftArrow from "../asset/leftarrow.png";
+import rightArrow from "../asset/rightarrow.png";
 function Body() {
   const [originalRestroList, setOriginalRestroList] = useState([]);
   const [restroList, setRestroList] = useState([]);
@@ -71,12 +72,42 @@ function Body() {
     setSearch("");
   };
 
+  const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
+    <img src={leftArrow} alt="prevArrow" {...props} />
+  );
+
+  const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
+    <img src={rightArrow} alt="nextArrow" {...props} />
+  );
+
   const settings = {
+    dots: false,
     infinite: false,
     speed: 1000,
     slidesToShow: 5,
     slidesToScroll: 2,
     arrow: true,
+    prevArrow: <SlickArrowLeft />,
+    nextArrow: <SlickArrowRight />,
+    responsive: [
+      {
+        breakpoint: 1024, // Adjust the settings for screens smaller than 1024px
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600, // Adjust the settings for screens smaller than 600px
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+    ],
   };
 
   return (
@@ -85,48 +116,46 @@ function Body() {
         <Slide />
 
         <div className=" w-4/5 mx-auto">
-        <div class=" space-y-4 md:space-y-0 my-16 md:gap-6">
-                <div class="md:flex md:space-x-4 w-full max-w-screen-lg ">
-                  <form
-                    action=""
-                    class="flex flex-col md:flex-row items-center gap-2 md:w-1/2"
-                    onSubmit={searchHandler}
-                  >
-                    <div class="relative bg-orange-500 flex items-center w-full h-10 focus-within:shadow-lg overflow-hidden">
-                      <div class="grid place-items-center h-full w-12 text-gray-300">
-                        <LuSearch />
-                      </div>
-                      <input
-                        class="peer h-full w-full outline-none text-sm text-black-700 focus:border-gray-300 border border-orange-400 px-2"
-                        type="text"
-                        id="search"
-                        placeholder="Search"
-                        onChange={inputHandler}
-                        value={search}
-                        required
-                      />
-                    </div>
-                  </form>
-
-                  <button
-                    className="flex items-center justify-center font-semibold w-full h-10 my-4 md:py-0 px-6  text-lg text-white bg-orange-500 hover:bg-red-600 md:w-auto md:ml-2"
-                    id="sectionId"
-                    onClick={topResHandler}
-                  >
-                    Rating 4.0+
-                  </button>
+          <div class=" space-y-4 md:space-y-0 my-16 md:gap-6">
+            <div class="md:flex md:space-x-4 w-full max-w-screen-lg ">
+              <form
+                action=""
+                class="flex flex-col md:flex-row items-center gap-2 md:w-1/2"
+                onSubmit={searchHandler}
+              >
+                <div class="relative bg-orange-500 flex items-center w-full h-10 focus-within:shadow-lg overflow-hidden">
+                  <div class="grid place-items-center h-full w-12 text-gray-300">
+                    <LuSearch />
+                  </div>
+                  <input
+                    class="peer h-full w-full outline-none text-sm text-black-700 focus:border-gray-300 border border-orange-400 px-2"
+                    type="text"
+                    id="search"
+                    placeholder="Search"
+                    onChange={inputHandler}
+                    value={search}
+                    required
+                  />
                 </div>
-              </div>
+              </form>
 
-              <h1 className="font-semibold text-3xl text-center md:text-start md:mt-24 mt-10 mb-6 ">
-                OUR TOP RESTAURANT
-              </h1>
+              <button
+                className="flex items-center justify-center font-semibold w-full h-10 my-4 md:py-0 px-6  text-lg text-white bg-orange-500 hover:bg-red-600 md:w-auto md:ml-2"
+                id="sectionId"
+                onClick={topResHandler}
+              >
+                Rating 4.0+
+              </button>
+            </div>
+          </div>
+
+          <h1 className="font-semibold text-3xl text-center md:text-start md:mt-24 mt-10 mb-6 ">
+            OUR TOP RESTAURANT
+          </h1>
           {loading ? (
             <Shimmer />
           ) : (
             <>
-              
-
               <div className=" flex flex-wrap justify-center items-center gap-7">
                 {restroList.map((restro) => (
                   <NavLink
@@ -145,11 +174,10 @@ function Body() {
                 OUR POPULAR DISHES
               </h1>
 
-              <div className=" py-6 ">
-                <div className="banner">
+              <div className="  w-full shadow-xl shadow-gray-300  my-8">
+                <div className="">
                   <Slider {...settings}>
                     {banner.map((banList, index) => (
-                      // console.log(banList)
                       <Banner key={index} banner={banList} />
                     ))}
                   </Slider>
