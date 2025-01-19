@@ -14,22 +14,15 @@ const Payment = ({ onClose }) => {
   const dispatch = useDispatch();
   const handleClose = () => {
     setIsOpen(false);
-    // onClose();
   };
 
-  // const handleBackdropClick = (event) => {
-  //   if (event.target === paymentRef.current) {
-  //     handleClose();
-  //   }
-  // };
+
 
   return (
     <>
-      {/* {isOpen && ( */}
       <div
         className="font-sans bg-opacity-50 min-h-screen flex items-center justify-center"
-        // ref={paymentRef}
-        // onClick={handleBackdropClick}
+       
       >
         <div className="max-w-xl mx-auto p-5 bg-white shadow-2xl shadow-black">
           <h2 className="text-3xl font-bold text-gray-800 text-center">
@@ -42,7 +35,6 @@ const Payment = ({ onClose }) => {
           <div className="mt-8">
             <p className="text-gray-800 text-lg">Total Amount: ₹{totalPrice}</p>
           </div>
-          {/* <form className="mt-4" onSubmit={handleSubmit}> */}
           <form>
             <input
               type="text"
@@ -78,7 +70,6 @@ const Payment = ({ onClose }) => {
           </form>
           <NavLink to="/cart">
             <button
-              // type="submit"
               className="mt-4 w-full py-3.5 text-sm bg-gray-400 text-white rounded-md hover:bg-gray-600"
               onClick={handleClose}
             >
@@ -86,9 +77,7 @@ const Payment = ({ onClose }) => {
             </button>
           </NavLink>
         </div>
-        {/* <OrderPlacedModal /> */}
       </div>
-      {/* )} */}
     </>
   );
 };

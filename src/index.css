@@ -5,3 +5,7 @@
 .active{
     color:orange
 }
+
+.slick-prev, .slick-next {
+  display: none !important;
+}

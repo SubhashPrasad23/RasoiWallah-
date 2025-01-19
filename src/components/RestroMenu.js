@@ -9,7 +9,6 @@ function RestroMenu() {
   const [menu, setMenu] = useState(null);
   const [isLoading, setIsLoading]=useState(true)
   const { resId } = useParams();
-  // console.log(menu)
   useEffect(() => {
     fetchMenu();
   }, []);
@@ -25,11 +24,6 @@ function RestroMenu() {
       console.error("Error fetching menu:", error);
     }
   };
-
-  // if (menu === null) {
-  //   return <h1>loading</h1>;
-  // }
-
   const { name, cuisines, costForTwoMessage } =
     menu?.data?.cards[2]?.card?.card?.info || {};
 

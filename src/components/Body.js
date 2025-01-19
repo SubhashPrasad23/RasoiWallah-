@@ -2,22 +2,16 @@ import React, { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import axios from "axios";
 import Shimmer from "./shimmer/Shimmer";
-import Banner from "./banner/Banner";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 import { NavLink } from "react-router-dom";
 import { LuSearch } from "react-icons/lu";
 import Slide from "./Slide";
-import leftArrow from "../asset/leftarrow.png";
-import rightArrow from "../asset/rightarrow.png";
+
 function Body() {
   const [originalRestroList, setOriginalRestroList] = useState([]);
   const [restroList, setRestroList] = useState([]);
-  const [banner, setBanner] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  // console.log(restroList)
   useEffect(() => {
     fetchData();
   }, []);
@@ -25,19 +19,15 @@ function Body() {
   const fetchData = async () => {
     const apiUrl =
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.6139391&lng=77.2090212&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING";
-
     try {
       const response = await axios.get(apiUrl);
+
       const restaurant =
         response?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants;
       setRestroList(restaurant);
       setOriginalRestroList(restaurant);
       setLoading(false);
-      const bannerRes =
-        response?.data?.data?.cards[0]?.card?.card?.gridElements?.infoWithStyle
-          ?.info;
-      setBanner(bannerRes);
     } catch (err) {
       setLoading(false);
     }
@@ -72,63 +62,23 @@ function Body() {
     setSearch("");
   };
 
-  const SlickArrowLeft = ({ currentSlide, slideCount, ...props }) => (
-    <img src={leftArrow} alt="prevArrow" {...props} />
-  );
-
-  const SlickArrowRight = ({ currentSlide, slideCount, ...props }) => (
-    <img src={rightArrow} alt="nextArrow" {...props} />
-  );
-
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 1000,
-    slidesToShow: 5,
-    slidesToScroll: 2,
-    arrow: true,
-    prevArrow: <SlickArrowLeft />,
-    nextArrow: <SlickArrowRight />,
-    responsive: [
-      {
-        breakpoint: 1024, // Adjust the settings for screens smaller than 1024px
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 600, // Adjust the settings for screens smaller than 600px
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 1,
-        },
-      },
-    ],
-  };
-
   return (
     <>
-      <div className="">
+      <div className="h-full w-full">
         <Slide />
-
         <div className=" w-4/5 mx-auto">
-          <div class=" space-y-4 md:space-y-0 my-16 md:gap-6">
-            <div class="md:flex md:space-x-4 w-full max-w-screen-lg ">
+          <div className=" space-y-4  my-16 ">
+            <div className=" place-content-center place-items-center w-full  ">
               <form
-                action=""
-                class="flex flex-col md:flex-row items-center gap-2 md:w-1/2"
+                className="flex flex-col md:flex-row items-center gap-2 md:w-1/2 w-full"
                 onSubmit={searchHandler}
               >
-                <div class="relative bg-orange-500 flex items-center w-full h-10 focus-within:shadow-lg overflow-hidden">
-                  <div class="grid place-items-center h-full w-12 text-gray-300">
-                    <LuSearch />
+                <div className="relative bg-orange-500 flex items-center w-full h-10 focus-within:shadow-lg overflow-hidden">
+                  <div className="grid place-items-center h-full w-12 text-gray-300">
+                    <LuSearch color="white" />
                   </div>
                   <input
-                    class="peer h-full w-full outline-none text-sm text-black-700 focus:border-gray-300 border border-orange-400 px-2"
+                    className="peer h-full w-full outline-none text-sm text-black-700 focus:border-gray-300 border border-orange-400 px-2"
                     type="text"
                     id="search"
                     placeholder="Search"
@@ -138,9 +88,8 @@ function Body() {
                   />
                 </div>
               </form>
-
               <button
-                className="flex items-center justify-center font-semibold w-full h-10 my-4 md:py-0 px-6  text-lg text-white bg-orange-500 hover:bg-red-600 md:w-auto md:ml-2"
+                className="flex items-center justify-center font-semibold w-full h-10 my-4 md:py-0 px-6  text-lg text-white bg-orange-500 hover:bg-orange-600 md:w-auto "
                 id="sectionId"
                 onClick={topResHandler}
               >
@@ -149,42 +98,30 @@ function Body() {
             </div>
           </div>
 
-          <h1 className="font-semibold text-3xl text-center md:text-start md:mt-24 mt-10 mb-6 ">
-            OUR TOP RESTAURANT
-          </h1>
-          {loading ? (
-            <Shimmer />
-          ) : (
-            <>
-              <div className=" flex flex-wrap justify-center items-center gap-7">
-                {restroList.map((restro) => (
-                  <NavLink
-                    to={"/restaurant/" + restro?.info?.id}
-                    key={restro?.info?.id}
-                  >
-                    <div className="">
-                      <RestaurantCard res={restro} />
+          <div className="w-full h-full">
+            <h1 className="font-semibold text-3xl md:ml-12 md:text-start text-center">
+              OUR TOP RESTAURANT
+            </h1>
+            <div className="flex flex-wrap justify-center items-center gap-7 py-8">
+              {loading
+                ? // Show shimmer skeleton for each item when loading
+                  [...Array(restroList.length || 8)].map((_, index) => (
+                    <div key={index} className="w-64 h-96">
+                      <Shimmer />
                     </div>
-                  </NavLink>
-                ))}
-              </div>
-              {/* <hr className="border-2  mt-24 border-orange-200" /> */}
-
-              <h1 className="mt-16 font-semibold text-3xl ">
-                OUR POPULAR DISHES
-              </h1>
-
-              <div className="  w-full shadow-xl shadow-gray-300  my-8">
-                <div className="">
-                  <Slider {...settings}>
-                    {banner.map((banList, index) => (
-                      <Banner key={index} banner={banList} />
-                    ))}
-                  </Slider>
-                </div>
-              </div>
-            </>
-          )}
+                  ))
+                : restroList.map((restro) => (
+                    <NavLink
+                      to={"/restaurant/" + restro?.info?.id}
+                      key={restro?.info?.id}
+                    >
+                      <div className="">
+                        <RestaurantCard res={restro} />
+                      </div>
+                    </NavLink>
+                  ))}
+            </div>
+          </div>
         </div>
       </div>
     </>

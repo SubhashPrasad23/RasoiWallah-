@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../store/slices/CartSlice";
 
 function ItemList({ items }) {
-  // console.log("itemList :", items);
   const dispatch = useDispatch();
   const handlerAddItem = (item) => {
     dispatch(addItem(item));

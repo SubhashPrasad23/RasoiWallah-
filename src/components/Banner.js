@@ -1,10 +1,8 @@
 import React from "react";
 import "../../App.css"
 function Banner({ banner }) {
-  // console.log(banner)
 
   const { imageId } = banner;
-  // console.log(img)
   return (
     <div className=" h-72 w-96">
       <div className="overflow-hidden">

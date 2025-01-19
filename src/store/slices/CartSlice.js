@@ -46,8 +46,7 @@ const cartSlice = createSlice({
       const check = state.items.findIndex((item) => {
         return item.card.info.id === action.payload.card.info.id;
       });
-      // console.log((state.totalQuantity += 1), "quantity");
-      // console.log(check);
+    
       if (check !== -1) {
         state.items[check].quantity += 1;
         state.items[check].singleitemprice =
@@ -86,7 +85,6 @@ const cartSlice = createSlice({
           );
           state.totalPrice=state.items.reduce((total,item)=>total+item.singleitemprice,0)
         }
-        // state.items[check].quantity -= 1;
       }
     },
     

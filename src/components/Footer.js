@@ -16,7 +16,7 @@ const Footer = () => {
           </p>
           <div className="w-44 pt-6 md:pt-0 ">
             <NavLink to="/contact">
-              <p className="hover:bg-red-700 text-center bg-orange-500 text-white justify-center rounded-lg shadow px-10 py-3 flex items-center">
+              <p className="hover:bg-orange-600 text-center bg-orange-500 text-white justify-center rounded-lg shadow px-10 py-3 flex items-center">
                 Contact Us
               </p>
             </NavLink>

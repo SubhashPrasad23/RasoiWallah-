@@ -5,7 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
-import About from "./Pages/About.js";
 import Body from "./components/Body.js";
 import Error from "./Pages/Error.js";
 import RestroMenu from "./components/RestroMenu.js";
@@ -28,29 +27,23 @@ const router = createBrowserRouter([
         path: "/",
         element: <Body />,
       },
-      {
-        path: "about",
-        element: <About />,
-      },
+      
       {
         path: "contact",
         element: <Contact />,
       },
       {
         path: "/cart",
-        // element:<PrivateRoute Component={Cart}/>
         element: <Cart />,
       },
       {
         path: "restaurant/:resId",
-        // element:<PrivateRoute Component={RestroMenu}/>
         element: <RestroMenu />,
       },
       {
         path: "/payment",
         element: <PrivateRoute Component={Payment} />,
 
-        // element: <Payment />,
       },
     ],
   },

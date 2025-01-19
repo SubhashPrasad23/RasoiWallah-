@@ -78,7 +78,7 @@ dispatch(removeItem(item))
                                 <img
                                   className="h-16 w-16 mr-4"
                                   src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_60/${item.card.info.imageId}`}
-                                  alt="Product image"
+                                  alt="product_img"
                                 />
                                 <span className="font-semibold">
                                   {item.card.info.name}

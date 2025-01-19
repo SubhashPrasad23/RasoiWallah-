@@ -33,18 +33,8 @@ function Contact() {
   };
 
   const sendFormDataToBackend = async (formData) => {
-    // Replace this with actual API request
     console.log("Sending form data:", formData);
-    // Example of a fetch request:
-    // const response = await fetch('/api/contact', {
-    //   method: 'POST',
-    //   body: JSON.stringify(formData),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // });
-    // const data = await response.json();
-    // return data;
+  
   };
 
   return (
