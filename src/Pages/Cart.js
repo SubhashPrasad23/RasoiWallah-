@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import ItemList from "../components/ItemList";
-import { updateQuantity, decreaseQuantity,removeItem } from "../store/slices/CartSlice";
+import {
+  updateQuantity,
+  decreaseQuantity,
+  removeItem,
+} from "../store/slices/CartSlice";
 import { NavLink } from "react-router-dom";
 import Payment from "../components/Payment";
 import OrderPlacedModal from "../components/OrderPlacedModal";
@@ -25,11 +28,8 @@ function Cart() {
     dispatch(decreaseQuantity(item));
   };
 
-  const handlePopUp = () => {
-    setIsPaymentOpen(true);
-  };
   const handlePaymentClose = () => {
-    setIsPaymentOpen(false); // Reset the state when closing the popup
+    setIsPaymentOpen(false);
   };
 
   const handlePlaceOrderClose = () => {
@@ -38,15 +38,15 @@ function Cart() {
   const handlePlaceOrderopen = () => {
     setIsPlaceOrder(true);
   };
-const handleRemoveItem=(item)=>{
-console.log(item)
-dispatch(removeItem(item))
-}
+  const handleRemoveItem = (item) => {
+    console.log(item);
+    dispatch(removeItem(item));
+  };
 
   return (
-    <>
+    <div className="h-full w-full">
       {cartItem.length === 0 ? (
-        <div className="flex flex-col justify-center items-center my-36 space-y-6 ">
+        <div className="h-full flex flex-col justify-center items-center my-36 space-y-6 ">
           <h1 className="font-semibold text-3xl">Your cart is empty !</h1>
           <p className="text-lg text-gray-500">
             You can go to home page to view more restaurants
@@ -71,7 +71,6 @@ dispatch(removeItem(item))
                     <tbody>
                       {cartItem.map((item) => (
                         <>
-                          {/* console.log(item."itemmmm") */}
                           <tr>
                             <td className="py-4">
                               <div className="flex items-center">
@@ -110,8 +109,8 @@ dispatch(removeItem(item))
                               </div>
                             </td>
                             <td className="py-4">₹ {item.singleitemprice}</td>
-                            <td onClick={()=>handleRemoveItem(item)}>
-                              <MdDelete className="h-6 w-6"/>
+                            <td onClick={() => handleRemoveItem(item)}>
+                              <MdDelete className="h-6 w-6" />
                             </td>
                           </tr>
                         </>
@@ -147,12 +146,9 @@ dispatch(removeItem(item))
                     </span>
                   </div>
                   <NavLink to="/payment">
-                  <button
-                    className="bg-orange-500 text-white py-2 px-4 rounded-lg mt-4 w-full"
-                    // onClick={handlePopUp}
-                  >
-                    PROCEED TO PAY
-                  </button>
+                    <button className="bg-orange-500 text-white py-2 px-4 rounded-lg mt-4 w-full">
+                      PROCEED TO PAY
+                    </button>
                   </NavLink>
                 </div>
               </div>
@@ -168,7 +164,7 @@ dispatch(removeItem(item))
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }
 

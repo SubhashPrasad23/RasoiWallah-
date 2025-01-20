@@ -42,8 +42,6 @@ function ItemList({ items }) {
             </div>
           </div>
         );
-
-        // console.log(item.card.info.imageId);
       })}
     </div>
   );
